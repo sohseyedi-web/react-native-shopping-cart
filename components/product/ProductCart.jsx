@@ -1,11 +1,13 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import ProductCartButton from './ProductCartButton';
+import ProductCartHeader from './ProductCartHeader';
 
 const ProductCart = ({ item }) => {
 
     return (
         <View key={item.id} style={styles.box}>
-            <View style={{ height: 190, flex: 1, justifyContent: "center" }}>
+            <View style={{ height: 190, flex: 1, justifyContent: "center", position: "relative" }}>
+                <ProductCartHeader item={item}/>
                 <Image source={{ uri: item.img }} resizeMode='contain' style={styles.image} />
             </View>
             <View style={{ paddingHorizontal: 8 }}>
