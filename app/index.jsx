@@ -4,6 +4,7 @@ import { products } from '../constant/product';
 import { useCartStore } from '../store/useStore';
 import CategoryList from '../components/category/CategoryList';
 import ProductCart from '../components/product/ProductCart';
+import ScreenWrapper from '../components/wrapper/ScreenWrapper';
 
 const HomePage = () => {
 
@@ -11,14 +12,14 @@ const HomePage = () => {
   const isAll = selectedCompany === "" || selectedCompany === "All"
   const filterProducts = products.filter(
     (item) =>
-        isAll
+      isAll
         ? products
         : item.company.toLowerCase() === selectedCompany.toLowerCase())
 
 
 
   return (
-    <View style={styles.container}>
+    <ScreenWrapper p={0}>
       <HeaderApp />
       <ScrollView style={styles.content}>
         <Text style={styles.title}>ShoeShop</Text>
@@ -39,7 +40,7 @@ const HomePage = () => {
           />
         </View>
       </ScrollView>
-    </View>
+    </ScreenWrapper>
   )
 }
 

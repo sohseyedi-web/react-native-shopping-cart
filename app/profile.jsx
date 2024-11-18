@@ -6,15 +6,18 @@ import Avatar from '../components/Avatar'
 import SubmitButton from '../components/button/SubmitButton'
 import MiniButton from '../components/button/MiniButton'
 import { router } from 'expo-router'
+import ScreenWrapper from '../components/wrapper/ScreenWrapper'
 
 const Profile = () => {
   return (
-    <View style={styles.container}>
-      <MiniButton
-        icon={<ChevronLeftIcon size={25} color={"#141414"} />}
-        onPress={() => router.push("/")}
-        contentStyle={{ backgroundColor: "rgb(34 197 94)" }}
-      />
+    <ScreenWrapper>
+      <View style={{ flexDirection: "row" }}>
+        <MiniButton
+          icon={<ChevronLeftIcon size={25} color={"#141414"} />}
+          onPress={() => router.push("/")}
+          contentStyle={{ backgroundColor: "rgb(34 197 94)" }}
+        />
+      </View>
       <View style={styles.profile}>
         <Avatar customStyle={styles.cover} />
         <TextField icon={<UserIcon size={25} color={"#fefefe"} />} placeHolder={"Family Name"} />
@@ -26,18 +29,13 @@ const Profile = () => {
           contentStyle={{ backgroundColor: "#141414" }}
           textStyle={{ color: "rgb(34 197 94)" }} />
       </View>
-    </View >
+    </ScreenWrapper >
   )
 }
 
 export default Profile
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#40A578",
-    flex: 1,
-    padding: 16,
-  },
   profile: {
     justifyContent: "center",
     alignItems: "center",
