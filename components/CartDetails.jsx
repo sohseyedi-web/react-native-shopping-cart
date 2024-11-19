@@ -1,21 +1,17 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
-import { useMemo, useRef } from 'react'
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import { useCartStore } from '../store/useStore'
-import SubmitButton from './button/SubmitButton'
+import { View, Text, StyleSheet } from 'react-native';
+import { useMemo, useRef } from 'react';
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import { useCartStore } from '../store/useStore';
+import SubmitButton from './button/SubmitButton';
 
 const CartDetails = () => {
-  const bottomSheetRef = useRef(null)
-  const { cartItems } = useCartStore()
+  const bottomSheetRef = useRef(null);
+  const { cartItems } = useCartStore();
 
-  // محاسبه جمع کل
-  const total = cartItems.reduce((sum, item) => sum + (item.newPrice * item.quantity), 0)
+  const total = cartItems.reduce((sum, item) => sum + (item.newPrice * item.quantity), 0);
+  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  // تعریف نقاط توقف BottomSheet
-  const snapPoints = useMemo(() => ['25%', '50%', '90%'], [])
-
-  // محاسبه تعداد کل آیتم‌ها
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   const renderCartSummary = () => (
     <View style={styles.summaryContainer}>
@@ -46,22 +42,25 @@ const CartDetails = () => {
       </View>
       <SubmitButton title={"Complete Order"} textStyle={{ color: "#fefefe" }} contentStyle={{ backgroundColor: "rgb(34 197 94)" }} />
     </View>
-  )
-
-  
+  );
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
       snapPoints={snapPoints}
-      enablePanDownToClose={false}
+      enablePanDownToClose={true}
+      index={0}
     >
       <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
-        {renderCartSummary()}
+        {cartItems.length > 0 ? (
+          renderCartSummary()
+        ) : (
+          <Text style={{ textAlign: 'center', color: '#666' }}>Your cart is empty</Text>
+        )}
       </BottomSheetScrollView>
     </BottomSheet>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
   summaryLabel: {
     fontSize: 18,
     color: '#141414',
-    fontWeight: "semibold"
+    fontWeight: "semibold",
   },
   summaryValue: {
     color: '#141414',
@@ -108,55 +107,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'rgb(34 197 94)',
   },
-  checkoutButton: {
-    backgroundColor: 'rgb(34 197 94)',
-    padding: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  checkoutButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  orderItemsContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    elevation: 2,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: '#333',
-  },
-  orderItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  orderItemInfo: {
-    flex: 1,
-  },
-  itemName: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 4,
-  },
-  itemQuantity: {
-    fontSize: 12,
-    color: '#666',
-  },
-  itemPrice: {
-    fontSize: 14,
-    color: '#333',
-    fontWeight: '500',
-  },
-})
+});
 
-export default CartDetails
+export default CartDetails;
